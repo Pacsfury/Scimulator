@@ -1,0 +1,7 @@
+*.pdb
+b.bat
+*.obj
+*.dll
+*.exe
+.vscode/
+*.ilk
