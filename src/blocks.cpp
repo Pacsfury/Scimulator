@@ -11,7 +11,7 @@ sf::RectangleShape createBlock(const std::string& name, sf::Vector2f pos) {
     auto [it, inserted] = textureCache.try_emplace(name);
 
     if (inserted) {
-        if (!it->second.loadFromFile(std::format("assets/images/{}.png", name))) {
+        if (!it->second.loadFromFile(std::format("assets/images/blocks/{}.png", name))) {
         }
     }
 

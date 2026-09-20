@@ -14,6 +14,15 @@ inline sf::RectangleShape IRON(sf::Vector2f pos) {
     rect.setPosition(pos);
     return rect;
 }
+inline const sf::RectangleShape& WOOD() {
+    static const sf::RectangleShape instance = createBlock("wood");
+    return instance;
+}
+inline sf::RectangleShape WOOD(sf::Vector2f pos) {
+    sf::RectangleShape rect = WOOD();
+    rect.setPosition(pos);
+    return rect;
+}
 }  // namespace Blocks
 
 int main() {
@@ -25,7 +34,9 @@ int main() {
     view.setCenter({0.f, 0.f});
     window.setView(view);
 
-    std::vector<sf::Vector2f> placedBlocks;
+    std::vector<Block> placedBlocks;
+    Block block;
+    int selected_block_type = 0;
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -38,15 +49,36 @@ int main() {
 
                     sf::Vector2f finalPos = {gridPos.x + 10.f, gridPos.y + 10.f};
 
-                    placedBlocks.push_back(finalPos);
+                    block.pos = finalPos;
+                    block.type = static_cast<BlockType>(selected_block_type);
+
+                    placedBlocks.push_back(block);
+                }
+            } else if (const auto* keyClick = event->getIf<sf::Event::KeyPressed>()) {
+                switch (keyClick->code) {
+                    case sf::Keyboard::Key::Num1:
+                        selected_block_type = 0; // Iron
+                        break;
+                    case sf::Keyboard::Key::Num2:
+                        selected_block_type = 1; // Wood
+                        break;
+                    default:
+                        break;
                 }
             }
         }
 
         window.clear(sf::Color::Black);
 
-        for (const auto& pos : placedBlocks) {
-            window.draw(Blocks::IRON(pos));
+        for (const auto& block : placedBlocks) {
+            switch (block.type) {
+                case BlockType::Iron:
+                    window.draw(Blocks::IRON(block.pos));
+                    break;
+                case BlockType::Wood:
+                    window.draw(Blocks::WOOD(block.pos));
+                    break;
+            }
         }
 
         window.display();

@@ -8,6 +8,12 @@
 
 There will be some predefined blocks, but you can create more blocks using the DSLs.
 
+I will add a sidebar, but you can also change you block using the keyboard:
+
+**1**: Iron
+
+**2**: Wood
+
 ## DSL 1: Propierties
 
 For every block type, you can add and modify propierties like this:
@@ -69,4 +75,6 @@ when .power do
 
 ## Progress:
 
-- Place iron blocks on a grid
+- Place iron blocks on the grid
+- Place wood blocks on the grid
+- Select block with keyboard
