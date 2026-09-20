@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <vector>  // Necesario para guardar las posiciones de los bloques
+#include <vector>
 
 #include "../include/blocks.hpp"
 #include "../include/grid.hpp"
