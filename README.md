@@ -78,3 +78,4 @@ when .power do
 - Place iron blocks on the grid
 - Place wood blocks on the grid
 - Select block with keyboard
+- Propierties lexing
