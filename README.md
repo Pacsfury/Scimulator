@@ -32,14 +32,16 @@ You can change the propierties for every block at a future sidebar.
 ## DSL 2: Logic
 _.l files_
 
+_This part is the less advanced. It may contain errors or be changed_
+
 Also, some blocks need logic or movement. You can use this:
 
 ```
 when .voltage do -- power is a float, so when power > 0 this is triggered
     if .voltage > 50 then
         emit(heat 10) -- If too much voltage, emit heat
-    /
-/
+    /.
+/.
 ```
 
 ## Example: Humanoid
