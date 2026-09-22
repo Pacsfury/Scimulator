@@ -1,2 +1,2 @@
-*.l linguist-documentation
-*.p linguist-documentation
+*.l linguist-detectable=false
+*.p linguist-detectable=false
