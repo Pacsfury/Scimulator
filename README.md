@@ -15,6 +15,7 @@ I will add a sidebar, but you can also change you block using the keyboard:
 **2**: Wood
 
 ## DSL 1: Propierties
+_.p files_
 
 For every block type, you can add and modify propierties like this:
 
@@ -29,6 +30,7 @@ arr=@a,b       -- @ list
 You can change the propierties for every block at a future sidebar.
 
 ## DSL 2: Logic
+_.l files_
 
 Also, some blocks need logic or movement. You can use this:
 
@@ -79,3 +81,4 @@ when .power do
 - Place wood blocks on the grid
 - Select block with keyboard
 - Propierties lexing
+- Put a title at `.simdata/env.p` with `title_`!

@@ -1,8 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 #include "../include/blocks.hpp"
 #include "../include/grid.hpp"
+#include "../include/propiertiesdsl/lexer.hpp"
 
 namespace Blocks {
 inline const sf::RectangleShape& IRON() {
@@ -26,13 +29,40 @@ inline sf::RectangleShape WOOD(sf::Vector2f pos) {
 }  // namespace Blocks
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({1920, 1080}), "Simulator");
+    sf::RenderWindow window(sf::VideoMode({1920, 1080}), "Scimulator");
     window.setVerticalSyncEnabled(true);
 
     sf::View view;
     view.setSize({1920.f, 1080.f});
     view.setCenter({0.f, 0.f});
     window.setView(view);
+
+
+    std::ifstream env(".simdata/env.p"); // .simdata/env.p contains things such as floor? gravity. air-density. project_, etc
+    std::stringstream buffer;
+    buffer << env.rdbuf();
+    auto envPropierties = lex(buffer.str());
+
+    for (Node n : envPropierties) {
+        if (n.key == "project") {
+            const auto valueToString = [](const auto& value) {
+                using T = std::decay_t<decltype(value)>;
+                if constexpr (std::is_same_v<T, std::string>) {
+                    return std::string(value);
+                } else if constexpr (std::is_same_v<T, bool>) {
+                    return std::string(value ? "true" : "false");
+                } else if constexpr (std::is_same_v<T, int>) {
+                    return std::to_string(value);
+                } else if constexpr (std::is_same_v<T, float>) {
+                    return std::to_string(value);
+                }
+                return std::string{};
+            };
+
+            const std::string nameString = std::visit(valueToString, n.value) + " @ Scimulator" ;
+            window.setTitle(sf::String::fromUtf8(nameString.begin(), nameString.end()));
+        }
+    }
 
     std::vector<Block> placedBlocks;
     Block block;
