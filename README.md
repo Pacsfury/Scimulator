@@ -84,3 +84,4 @@ when .power do
 - Select block with keyboard
 - Propierties lexing
 - Put a title at `.simdata/env.p` with `title_`!
+- Set start width and height with `width#` and `height#`
