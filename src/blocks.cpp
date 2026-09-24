@@ -21,11 +21,11 @@ sf::RectangleShape createBlock(const std::string& name, sf::Vector2f pos) {
 
     sf::RectangleShape rect(size);
     rect.setTexture(&rectT);
-    
+
     rect.setOrigin(size / 2.0f);
-    
+
     rect.setPosition(pos);
     rect.setScale({0.2f, 0.2f});
-    
+
     return rect;
 }

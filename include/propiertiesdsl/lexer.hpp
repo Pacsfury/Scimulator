@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <variant>
+#include <vector>
 
 struct Node {
     std::string key;
