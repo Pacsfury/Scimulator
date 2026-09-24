@@ -77,11 +77,21 @@ when .power do
 -- Simple logic: if too electricity, die
 ```
 
+## Current propierties
+
+## At .simdata/env.p
+In this file, we put the main project configuration:
+
+| Name | Description |
+| ---- | ------------|
+| `title_` | What is the project called? Added at window name: `title_ @ Scimulator` |
+| `width#`, `height#` | Window's size |
+| `full?` | Init with fullscreen or not. _Use F11 to toggle_ |
+
 ## Progress:
 
 - Place iron blocks on the grid
 - Place wood blocks on the grid
 - Select block with keyboard
 - Propierties lexing
-- Put a title at `.simdata/env.p` with `title_`!
-- Set start width and height with `width#` and `height#`
+- Basic project propierties

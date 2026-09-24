@@ -51,6 +51,9 @@ int main() {
     view.setCenter({0.f, 0.f});
     window.setView(view);
 
+    bool isFullscreen = false;
+    sf::String currentTitle = "Scimulator";
+
     std::ifstream env(
         ".simdata/env.p");  // .simdata/env.p contains things such as floor? gravity. air-density. project_, etc
     std::stringstream buffer;
@@ -66,7 +69,8 @@ int main() {
     for (Node n : envPropierties) {
         if (n.key == "project") {
             const std::string nameString = std::visit(valueToString, n.value) + " @ Scimulator";
-            window.setTitle(sf::String::fromUtf8(nameString.begin(), nameString.end()));
+            currentTitle = sf::String::fromUtf8(nameString.begin(), nameString.end());
+            window.setTitle(currentTitle);
         } else if (n.key == "heigth") {
             const std::string heigthStr = std::visit(valueToString, n.value);
             targetheigth = static_cast<unsigned int>(std::atoi(heigthStr.c_str()));
@@ -75,12 +79,22 @@ int main() {
             const std::string widthStr = std::visit(valueToString, n.value);
             targetWidth = static_cast<unsigned int>(std::atoi(widthStr.c_str()));
             shouldResize = true;
+        } else if (n.key == "full") {
+            isFullscreen = !isFullscreen;
+            const std::string val = std::visit(valueToString, n.value);
+
+            if (isFullscreen && val == "true") {
+                sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+                window.create(desktopMode, currentTitle, sf::State::Fullscreen);
+            } else {
+                window.create(sf::VideoMode(window.getSize()), currentTitle, sf::State::Windowed);
+            }
         }
     }
 
     if (shouldResize) {
         window.setSize({targetWidth, targetheigth});
-        
+
         view.setSize({static_cast<float>(targetWidth), static_cast<float>(targetheigth)});
         window.setView(view);
     }
@@ -111,6 +125,19 @@ int main() {
                         break;
                     case sf::Keyboard::Key::Num2:
                         selected_block_type = 1;  // Wood
+                        break;
+                    case sf::Keyboard::Key::F11:
+                        isFullscreen = !isFullscreen;
+                        if (isFullscreen) {
+                            sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+                            window.create(desktopMode, currentTitle, sf::State::Fullscreen);
+                        } else {
+                            window.create(sf::VideoMode({targetWidth, targetheigth}), currentTitle,
+                                          sf::State::Windowed);
+                        }
+
+                        window.setVerticalSyncEnabled(true);
+                        window.setView(view);
                         break;
                     default:
                         break;
